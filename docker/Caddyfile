@@ -1,0 +1,34 @@
+{
+	frankenphp
+    # Disable automatic HTTPS redirects globally so HTTP -> HTTPS won't be forced
+    auto_https disable_redirects
+}
+
+:80 {
+    root public/
+
+    php_server
+}
+
+https://laravel.localhost {
+	# Use Caddy's internal CA for a local trusted cert that your host accepts
+    tls internal
+
+    root public/
+	encode zstd br gzip
+	php_server {
+		try_files {path} index.php
+	}
+
+	intercept {
+        @accel header X-Accel-Redirect *
+        handle_response @accel {
+            root private-files/
+            rewrite * {resp.header.X-Accel-Redirect}
+            method * GET
+            # Remove the X-Accel-Redirect header set by PHP for increased security
+            header -X-Accel-Redirect
+            file_server
+        }
+    }
+}
