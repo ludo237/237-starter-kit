@@ -3,10 +3,10 @@ ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 # Declare all targets as phony (not file targets)
 .PHONY: directories sqlite-init docker-up docker-down docker-laravel-init docker-test-init \
 		docker-test-coverage docker-test docker-test-fast docker-audit docker-phpstan \
-		docker-pint docker-pint-dry docker-rector docker-composer-update docker-ziggy \
-		laravel-init test-init test-coverage ziggy test test-fast audit phpstan pint \
+		docker-pint docker-pint-dry docker-rector docker-composer-update docker-wayfinder \
+		laravel-init test-init test-coverage wayfinder test test-fast audit phpstan pint \
 		pint-dry rector pre-commit-fe pre-commit-be pre-commit-all \
-		ssr-build ssr-start ssr-stop ssr-check
+		ssr-build ssr-start ssr-stop ssr-check dev dev-ssr
 
 directories: ## Setup storage directories and permissions
 	@cd $(ROOT_DIR); set -e; \
@@ -149,3 +149,16 @@ pre-commit-be: ## Run backend pre-commit checks
 	@$(MAKE) docker-test-fast
 
 pre-commit: pre-commit-be pre-commit-fe
+
+dev:
+	php artisan serve & \
+	php artisan queue:listen --tries=1 & \
+	php artisan pail --timeout=0 & \
+	php artisan reverb:start --host="0.0.0.0" --port=8080 & \
+	bun run dev
+
+dev-ssr: ssr-build ssr-start
+	php artisan serve & \
+	php artisan queue:listen --tries=1 & \
+	php artisan pail --timeout=0 & \
+	php artisan reverb:start --host="0.0.0.0" --port=8080
