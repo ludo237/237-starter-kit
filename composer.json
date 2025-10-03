@@ -2,10 +2,13 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "ludo237/237-starter-kit",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Opinionated Laravel starter kit with React, Inertia and Tailwindcss.",
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "react",
+        "inertia",
+        "starter kit"
     ],
     "license": "MIT",
     "require": {
