@@ -76,8 +76,8 @@ docker-composer-update: ## Update Composer dependencies in Docker
 		registry.gitlab.com/6go/dx/docker/composer:latest \
 		composer update -oW --ignore-platform-reqs
 
-docker-ziggy: ## Generate Ziggy routes in Docker
-	@podman exec -it app make ziggy
+docker-wayfinder: ## Generate Wayfinder routes in Docker
+	@podman exec -it app make wayfinder
 
 laravel-init: directories sqlite-init ## Initialize Laravel application
 	@cd $(ROOT_DIR); set -e; \
@@ -102,8 +102,8 @@ test-coverage: test-init ## Run tests with coverage report
 		--parallel \
 		--processes=6
 
-ziggy: ## Generate Ziggy TypeScript routes
-	@php artisan ziggy:generate --types-only
+wayfinder: ## Generate Wayfinder files
+	@php artisan wayfinder:generate --with-form
 
 test: test-init ## Run tests with bail on first failure
 	@php artisan test --bail
@@ -115,13 +115,13 @@ audit: ## Run Composer security audit
 	@composer audit
 
 phpstan: ## Run PHPStan static analysis
-	@./vendor/bin/phpstan analyse --error-format gitlab --memory-limit=512M
+	@./vendor/bin/phpstan analyse --memory-limit=512M
 
 pint: ## Run Laravel Pint code formatter
 	@./vendor/bin/pint --parallel
 
 pint-dry: ## Run Pint dry-run (check only)
-	@./vendor/bin/pint --format=gitlab --test --parallel --bail
+	@./vendor/bin/pint --test --parallel --bail
 
 rector: ## Run Rector automated refactoring
 	@./vendor/bin/rector --output-format=json
