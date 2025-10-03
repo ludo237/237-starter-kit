@@ -24,6 +24,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "^3.7",
+        "laravel/boost": "^1.3",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.18",
         "laravel/sail": "^1.41",
@@ -55,12 +56,10 @@
             "@php artisan boost:update"
         ],
         "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('envs/.env.dev', '.env');\""
+            "@php -r \"file_exists('.env') || copy('./envs/.env.dev', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi"
+            "make laravel-init"
         ]
     },
     "extra": {

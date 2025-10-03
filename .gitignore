@@ -27,3 +27,8 @@ yarn-error.log
 /.vscode
 /.zed
 .eslintcache
+.mcp.json
+boost.json
+CLAUDE.md
+.claude
+.junie
