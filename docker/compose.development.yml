@@ -1,6 +1,21 @@
 name: laravel
 
 services:
+  database:
+    image: registry.gitlab.com/6go/dx/docker/postgres:18
+    container_name: database
+    restart: unless-stopped
+    tty: true
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+    ports:
+      - "127.0.0.1:5432:5432"
+    networks:
+      - laravel
+
   app:
     image: registry.gitlab.com/6go/dx/docker/frankenphp:1
     container_name: app
@@ -19,7 +34,7 @@ services:
       - laravel
 
   queue:
-    image: registry.gitlab.com/6go/dx/docker/php:8.4
+    image: registry.gitlab.com/6go/dx/docker/php:8
     container_name: queue
     restart: unless-stopped
     stop_signal: SIGTERM
@@ -38,7 +53,7 @@ services:
       - laravel
 
   scheduler:
-    image: registry.gitlab.com/6go/dx/docker/php:8.4
+    image: registry.gitlab.com/6go/dx/docker/php:8
     container_name: scheduler
     restart: unless-stopped
     stop_signal: SIGTERM
@@ -57,7 +72,7 @@ services:
       - laravel
 
   reverb:
-    image: registry.gitlab.com/6go/dx/docker/php:8.4
+    image: registry.gitlab.com/6go/dx/docker/php:8
     container_name: reverb
     restart: unless-stopped
     stop_signal: SIGTERM
@@ -77,7 +92,7 @@ services:
       - laravel
 
   redis:
-    image: registry.gitlab.com/6go/dx/docker/redis:7
+    image: registry.gitlab.com/6go/dx/docker/redis:8
     container_name: redis
     restart: unless-stopped
     environment:
