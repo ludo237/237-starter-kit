@@ -151,14 +151,18 @@ pre-commit-be: ## Run backend pre-commit checks
 pre-commit: pre-commit-be pre-commit-fe
 
 dev:
-	php artisan serve & \
-	php artisan queue:listen --tries=1 & \
-	php artisan pail --timeout=0 & \
-	php artisan reverb:start --host="0.0.0.0" --port=8080 & \
-	bun run dev
+	bunx --bun concurrently -c "#93c5fd,#c4b5fd,#fb7185,#fdba74" \
+	"php artisan serve" \
+	"php artisan queue:listen --tries=1" \
+	"php artisan pail --timeout=0" \
+	"bun run dev" \
+	--names=server,queue,logs,vite --kill-others
 
-dev-ssr: ssr-build ssr-start
-	php artisan serve & \
-	php artisan queue:listen --tries=1 & \
-	php artisan pail --timeout=0 & \
-	php artisan reverb:start --host="0.0.0.0" --port=8080
+dev-ssr:
+	bun run build:ssr
+	bunx --bun concurrently -c "#93c5fd,#c4b5fd,#fb7185,#fdba74" \
+	"php artisan serve" \
+	"php artisan queue:listen --tries=1" \
+	"php artisan pail --timeout=0" \
+	"php artisan inertia:start-ssr" \
+	--names=server,queue,logs,ssr --kill-others
