@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 import { register } from '@/routes';
 import { request } from '@/routes/password';
-import { Form, Head } from '@inertiajs/react';
+import { Form } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 interface LoginProps {
@@ -22,8 +22,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
             title="Log in to your account"
             description="Enter your email and password below to log in"
         >
-            <Head title="Log in" />
-
+            c
             <Form
                 {...AuthenticatedSessionController.store.form()}
                 resetOnSuccess={['password']}
@@ -104,7 +103,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     </>
                 )}
             </Form>
-
             {status && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
                     {status}
