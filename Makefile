@@ -103,7 +103,7 @@ test-coverage: test-init ## Run tests with coverage report
 		--processes=6
 
 wayfinder: ## Generate Wayfinder files
-	@php artisan wayfinder:generate --with-form
+	@php artisan wayfinder:generate --with-form --path=resources/js/wayfinder
 
 test: test-init ## Run tests with bail on first failure
 	@php artisan test --bail
