@@ -14,6 +14,7 @@ export default defineConfig({
         react(),
         tailwindcss(),
         wayfinder({
+            path: "resources/js/wayfinder",
             formVariants: true,
             actions: true,
             routes: true
