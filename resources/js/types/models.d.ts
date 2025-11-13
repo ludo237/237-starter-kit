@@ -9,6 +9,7 @@ interface SoftDeleteModel {
 }
 
 interface User extends Model, SoftDeleteModel {
+    avatar: string;
     name: string;
     email: string;
     emailVerifiedAt: string | null;

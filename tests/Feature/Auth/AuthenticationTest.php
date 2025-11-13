@@ -77,16 +77,12 @@ test('users can logout', function (): void {
 test('users are rate limited', function (): void {
     $user = User::factory()->create();
 
-    RateLimiter::increment(implode('|', [$user->email, '127.0.0.1']), amount: 10);
+    RateLimiter::increment(md5('login'.implode('|', [$user->email, '127.0.0.1'])), amount: 5);
 
     $response = $this->post(route('login.store'), [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
 
-    $response->assertSessionHasErrors('email');
-
-    $errors = session('errors');
-
-    $this->assertStringContainsString('Too many login attempts', $errors->first('email'));
+    $response->assertTooManyRequests();
 });
