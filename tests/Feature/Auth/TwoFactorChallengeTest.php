@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Inertia\Testing\AssertableInertia as Assert;
 use Laravel\Fortify\Features;
 
@@ -28,7 +28,7 @@ test('two factor challenge can be rendered', function (): void {
         'confirmPassword' => true,
     ]);
 
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $user->forceFill([
         'two_factor_secret' => encrypt('test-secret'),
@@ -38,7 +38,7 @@ test('two factor challenge can be rendered', function (): void {
 
     $this->post(route('login'), [
         'email' => $user->email,
-        'password' => 'password',
+        'password' => 'supersecret',
     ]);
 
     $this->get(route('two-factor.login'))

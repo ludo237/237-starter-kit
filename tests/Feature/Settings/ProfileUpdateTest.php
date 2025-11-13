@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 
 uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('profile page is displayed', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this
         ->actingAs($user)
@@ -17,7 +17,7 @@ test('profile page is displayed', function (): void {
 });
 
 test('profile information can be updated', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this
         ->actingAs($user)
@@ -38,7 +38,7 @@ test('profile information can be updated', function (): void {
 });
 
 test('email verification status is unchanged when the email address is unchanged', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this
         ->actingAs($user)
@@ -55,12 +55,12 @@ test('email verification status is unchanged when the email address is unchanged
 });
 
 test('user can delete their account', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this
         ->actingAs($user)
         ->delete(route('profile.destroy'), [
-            'password' => 'password',
+            'password' => 'supersecret',
         ]);
 
     $response
@@ -72,7 +72,7 @@ test('user can delete their account', function (): void {
 });
 
 test('correct password must be provided to delete account', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this
         ->actingAs($user)

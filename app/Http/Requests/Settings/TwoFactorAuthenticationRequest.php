@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Settings;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\InteractsWithTwoFactorState;
@@ -24,7 +23,7 @@ class TwoFactorAuthenticationRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array|string>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {

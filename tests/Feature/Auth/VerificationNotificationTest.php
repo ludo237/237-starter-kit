@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
 
@@ -11,7 +11,7 @@ uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
 test('sends verification notification', function (): void {
     Notification::fake();
 
-    $user = User::factory()->create([
+    $user = UserFactory::new()->create([
         'email_verified_at' => null,
     ]);
 
@@ -25,7 +25,7 @@ test('sends verification notification', function (): void {
 test('does not send verification notification if email is verified', function (): void {
     Notification::fake();
 
-    $user = User::factory()->create([
+    $user = UserFactory::new()->create([
         'email_verified_at' => now(),
     ]);
 

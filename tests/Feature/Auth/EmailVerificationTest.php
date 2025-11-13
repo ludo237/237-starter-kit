@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\URL;
 uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('email verification screen can be rendered', function (): void {
-    $user = User::factory()->unverified()->create();
+    $user = UserFactory::new()->unverified()->create();
 
     $response = $this->actingAs($user)->get(route('verification.notice'));
 
@@ -18,7 +18,7 @@ test('email verification screen can be rendered', function (): void {
 });
 
 test('email can be verified', function (): void {
-    $user = User::factory()->unverified()->create();
+    $user = UserFactory::new()->unverified()->create();
 
     Event::fake();
 
@@ -36,7 +36,7 @@ test('email can be verified', function (): void {
 });
 
 test('email is not verified with invalid hash', function (): void {
-    $user = User::factory()->unverified()->create();
+    $user = UserFactory::new()->unverified()->create();
 
     $verificationUrl = URL::temporarySignedRoute(
         'verification.verify',
@@ -50,7 +50,7 @@ test('email is not verified with invalid hash', function (): void {
 });
 
 test('email is not verified with invalid user id', function (): void {
-    $user = User::factory()->create([
+    $user = UserFactory::new()->create([
         'email_verified_at' => null,
     ]);
 
@@ -66,7 +66,7 @@ test('email is not verified with invalid user id', function (): void {
 });
 
 test('verified user is redirected to dashboard from verification prompt', function (): void {
-    $user = User::factory()->create([
+    $user = UserFactory::new()->create([
         'email_verified_at' => now(),
     ]);
 
@@ -76,7 +76,7 @@ test('verified user is redirected to dashboard from verification prompt', functi
 });
 
 test('already verified user visiting verification link is redirected without firing event again', function (): void {
-    $user = User::factory()->create([
+    $user = UserFactory::new()->create([
         'email_verified_at' => now(),
     ]);
 

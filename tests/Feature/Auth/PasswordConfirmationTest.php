@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Inertia\Testing\AssertableInertia as Assert;
 
 uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('confirm password screen can be rendered', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this->actingAs($user)->get(route('password.confirm'));
 

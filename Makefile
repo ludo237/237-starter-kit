@@ -9,37 +9,37 @@ ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 		ssr-build ssr-start ssr-stop ssr-check dev dev-ssr
 
 directories: ## Setup storage directories and permissions
-	@cd $(ROOT_DIR); set -e; \
-	rm -f bootstrap/cache/*.php; \
-	rm -rf storage/logs/* storage/framework/testing/* storage/app/public/*; \
-	mkdir -p storage/app/public; \
-	chown -R $$(id -u):$$(id -g) storage bootstrap/cache; \
-	chmod -R ug+rwX storage bootstrap/cache
+	@cd $(ROOT_DIR); set -e
+	rm -f bootstrap/cache/*.php
+	rm -rf storage/logs/* storage/framework/testing/* storage/app/public/*
+	@mkdir -p storage/app/public
+	@chown -R $$(id -u):$$(id -g) storage bootstrap/cache
+	@chmod -R ug+rwX storage bootstrap/cache
 
 sqlite-init: ## Initialize SQLite database
-	@cd $(ROOT_DIR); set -e; \
-	rm -rf database/database.sqlite; \
-	touch database/database.sqlite
+	@cd $(ROOT_DIR); set -e
+	rm -rf database/database.sqlite
+	@touch database/database.sqlite
 
 docker-up: directories sqlite-init ## Start Docker development environment
-	@cd $(ROOT_DIR); set -e; \
-	yes | cp -rf docker/compose.development.yml compose.yml; \
-	yes | cp -rf envs/.env.dev .env; \
-	podman run --rm --tty --interactive --volume $(ROOT_DIR):/app \
+	@cd $(ROOT_DIR); set -e
+	yes | cp -rf docker/compose.development.yml compose.yml
+	yes | cp -rf envs/.env.dev .env
+	@podman run --rm --tty --interactive --volume $(ROOT_DIR):/app \
 		registry.gitlab.com/6go/dx/docker/composer:latest \
-		composer install --ignore-platform-reqs; \
-	podman unshare rm -rf $(ROOT_DIR)docker/data/*; \
-	podman compose up -d --force-recreate
+		composer install --ignore-platform-reqs
+	@podman unshare rm -rf $(ROOT_DIR)docker/data/*
+	@podman compose up -d --force-recreate
 
 docker-restart:
-	@cd $(ROOT_DIR); set -e; \
-	podman compose restart
+	@cd $(ROOT_DIR); set -e
+	@podman compose restart
 
 docker-down: ## Stop Docker development environment
-	@cd $(ROOT_DIR); set -e; \
-	podman unshare rm -rf $(ROOT_DIR)docker/data/*; \
-	podman compose stop; \
-	podman compose down --volumes
+	@cd $(ROOT_DIR); set -e
+	@podman unshare rm -rf $(ROOT_DIR)docker/data/*
+	@podman compose stop
+	@podman compose down --volumes
 
 docker-laravel-init: ## Initialize Laravel in Docker container
 	@podman exec -it app make laravel-init
@@ -80,19 +80,19 @@ docker-wayfinder: ## Generate Wayfinder routes in Docker
 	@podman exec -it app make wayfinder
 
 laravel-init: directories sqlite-init ## Initialize Laravel application
-	@cd $(ROOT_DIR); set -e; \
-	cp $(ROOT_DIR)envs/.env.dev .env; \
-	php artisan key:generate; \
-	php artisan migrate:fresh --seed; \
-	php artisan optimize:clear
+	@cd $(ROOT_DIR); set -e
+	@cp $(ROOT_DIR)envs/.env.dev .env
+	@php artisan key:generate
+	@php artisan migrate:fresh --seed
+	@php artisan optimize:clear
 
 test-init: directories sqlite-init ## Initialize testing environment
-	@cd $(ROOT_DIR); set -e; \
-	mkdir -p reports/phpunit/coverage; \
-	touch reports/phpunit/coverage/teamcity.txt; \
-	yes | cp -rf envs/.env.dev .env; \
-	php artisan optimize:clear; \
-	php artisan migrate:fresh --env=testing
+	@cd $(ROOT_DIR); set -e
+	@mkdir -p reports/phpunit/coverage
+	@touch reports/phpunit/coverage/teamcity.txt
+	yes | cp -rf envs/.env.dev .env
+	@php artisan optimize:clear
+	@php artisan migrate:fresh --env=testing
 
 test-coverage: test-init ## Run tests with coverage report
 	@php artisan test \
@@ -143,12 +143,9 @@ pre-commit-fe: ## Run frontend pre-commit checks
 	@bun run eslint
 	@bun run types:check
 
-pre-commit-be: ## Run backend pre-commit checks
-	@$(MAKE) pint
-	@$(MAKE) phpstan
-	@$(MAKE) docker-test-fast
+pre-commit-be: pint phpstan docker-test-fast
 
-pre-commit: pre-commit-be pre-commit-fe
+pre-commit: pre-commit-fe pre-commit-be
 
 dev:
 	bunx --bun concurrently -c "#93c5fd,#c4b5fd,#fb7185,#fdba74" \

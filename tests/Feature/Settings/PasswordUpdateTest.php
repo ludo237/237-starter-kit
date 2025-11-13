@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Hash;
 
 uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('password update page is displayed', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this
         ->actingAs($user)
-        ->get(route('user-user-password.edit'));
+        ->get(route('user-password.edit'));
 
     $response->assertStatus(200);
 });
 
 test('password can be updated', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this
         ->actingAs($user)
         ->from(route('user-password.edit'))
-        ->put(route('password.update'), [
-            'current_password' => 'password',
+        ->put(route('user-password.update'), [
+            'current_password' => 'supersecret',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ]);
@@ -37,12 +37,12 @@ test('password can be updated', function (): void {
 });
 
 test('correct password must be provided to update password', function (): void {
-    $user = User::factory()->create();
+    $user = UserFactory::new()->create();
 
     $response = $this
         ->actingAs($user)
         ->from(route('user-password.edit'))
-        ->put(route('password.update'), [
+        ->put(route('user-password.update'), [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
