@@ -11,13 +11,14 @@ export default defineConfig({
             ssr: 'resources/js/ssr.tsx',
             refresh: true,
         }),
-        react(),
+        react({
+            babel: {
+                plugins: ['babel-plugin-react-compiler'],
+            },
+        }),
         tailwindcss(),
         wayfinder({
-            path: "resources/js/wayfinder",
             formVariants: true,
-            actions: true,
-            routes: true
         }),
     ],
     esbuild: {
