@@ -12,7 +12,7 @@ test('password update page is displayed', function (): void {
 
     $response = $this
         ->actingAs($user)
-        ->get(route('password.edit'));
+        ->get(route('user-user-password.edit'));
 
     $response->assertStatus(200);
 });
@@ -22,7 +22,7 @@ test('password can be updated', function (): void {
 
     $response = $this
         ->actingAs($user)
-        ->from(route('password.edit'))
+        ->from(route('user-password.edit'))
         ->put(route('password.update'), [
             'current_password' => 'password',
             'password' => 'new-password',
@@ -31,7 +31,7 @@ test('password can be updated', function (): void {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect(route('password.edit'));
+        ->assertRedirect(route('user-password.edit'));
 
     expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
 });
@@ -41,7 +41,7 @@ test('correct password must be provided to update password', function (): void {
 
     $response = $this
         ->actingAs($user)
-        ->from(route('password.edit'))
+        ->from(route('user-password.edit'))
         ->put(route('password.update'), [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
@@ -50,5 +50,5 @@ test('correct password must be provided to update password', function (): void {
 
     $response
         ->assertSessionHasErrors('current_password')
-        ->assertRedirect(route('password.edit'));
+        ->assertRedirect(route('user-password.edit'));
 });
