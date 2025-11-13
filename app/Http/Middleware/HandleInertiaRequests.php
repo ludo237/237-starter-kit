@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Http\Resources\UserResource;
-use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -42,7 +41,7 @@ class HandleInertiaRequests extends Middleware
         $user = $request->user() ? new UserResource($request->user()) : null;
 
         return [
-            ...parent::share($request),#
+            ...parent::share($request), //
             'csrf' => csrf_token(),
             'auth' => [
                 'user' => $user,

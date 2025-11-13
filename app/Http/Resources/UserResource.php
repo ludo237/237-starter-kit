@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Models\User;
@@ -18,14 +20,14 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->getKey(),
-            'name' => $this->getAttributeValue("name"),
-            'email' => $this->getAttributeValue("email"),
-            'emailVerifiedAt' => $this->getAttributeValue("email_verified_at"),
+            'name' => $this->getAttributeValue('name'),
+            'email' => $this->getAttributeValue('email'),
+            'emailVerifiedAt' => $this->getAttributeValue('email_verified_at'),
             'twoFactor' => [
-                'enabledAt' => $this->getAttributeValue("two_factor_confirmed_at")
+                'enabledAt' => $this->getAttributeValue('two_factor_confirmed_at'),
             ],
-            'createdAt' => $this->getAttributeValue("created_at"),
-            'updatedAt' => $this->getAttributeValue("updated_at")
+            'createdAt' => $this->getAttributeValue('created_at'),
+            'updatedAt' => $this->getAttributeValue('updated_at'),
         ];
     }
 }
