@@ -61,6 +61,7 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
+                // Canche this once php 8.5 is the minimum Pdo\Mysql::ATTR_SSL_CA
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
