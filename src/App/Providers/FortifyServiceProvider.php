@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Actions\Fortify\CreateNewUserAction;
-use App\Actions\Fortify\ResetUserPasswordAction;
+use Domain\User\Actions\Fortify\CreateNewUserAction;
+use Domain\User\Actions\Fortify\ResetUserPasswordAction;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;

@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Providers\AppServiceProvider;
+use App\Providers\FortifyServiceProvider;
+use App\Providers\SanctumServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\SanctumServiceProvider::class,
-    App\Providers\FortifyServiceProvider::class,
+    AppServiceProvider::class,
+    SanctumServiceProvider::class,
+    FortifyServiceProvider::class,
 ];

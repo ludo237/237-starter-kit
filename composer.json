@@ -15,10 +15,10 @@
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/fortify": "^1.30",
-        "laravel/framework": "^12.0",
+        "laravel/framework": "^13.0",
         "laravel/reverb": "^1.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.10.1",
+        "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1.9"
     },
     "require-dev": {
@@ -36,8 +36,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
+            "App\\": "src/App/",
+            "Domain\\": "src/Domain/",
+            "Database\\Factories\\": "src/Domain/User/Factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },
