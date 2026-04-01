@@ -1,9 +1,11 @@
-import { InertiaLinkProps } from '@inertiajs/react';
-import { LucideIcon } from 'lucide-react';
+import type { InertiaLinkProps } from '@inertiajs/react';
+import type { LucideIcon } from 'lucide-react';
+
+export type AppVariant = 'header' | 'sidebar';
 
 interface BreadcrumbItem {
     title: string;
-    href: string;
+    href: NonNullable<InertiaLinkProps['href']>;
 }
 
 interface NavGroup {
@@ -18,11 +20,14 @@ interface NavItem {
     isActive?: boolean;
 }
 
-interface SharedData {
-    csrf: string;
-    auth: {
-        user: EloquentResource<User> | null;
-    };
-    sidebarOpen: boolean;
-    [key: string]: unknown;
+interface AppLayoutProps {
+    children: ReactNode;
+    breadcrumbs?: BreadcrumbItem[];
+}
+
+interface AuthLayoutProps {
+    children?: ReactNode;
+    name?: string;
+    title?: string;
+    description?: string;
 }

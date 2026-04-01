@@ -118,12 +118,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Cache Serializable Classes
+    | Serializable Classes
     |--------------------------------------------------------------------------
     |
-    | This option controls which PHP classes may be unserialized from cache.
-    | Set to false to disallow all object unserialization, or provide an
-    | array of allowed class names to explicitly permit specific classes.
+    | This value determines the classes that can be unserialized from cache
+    | storage. By default, no PHP classes will be unserialized from your
+    | cache to prevent gadget chain attacks if your APP_KEY is leaked.
     |
     */
 

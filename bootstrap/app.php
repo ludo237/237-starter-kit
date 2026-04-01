@@ -30,5 +30,4 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands([
         __DIR__.'/../src/App/Console/Commands',
     ])
-    ->create()
-    ->useAppPath(dirname(__DIR__).'/src/App');
+    ->create();

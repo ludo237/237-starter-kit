@@ -3,7 +3,7 @@ includes:
 
 parameters:
     paths:
-      - src
+      - app
 
     excludePaths:
       - tests

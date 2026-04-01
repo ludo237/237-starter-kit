@@ -12,7 +12,8 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
+        "ext-pdo": "*",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^13.0",
@@ -36,9 +37,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/App/",
-            "Domain\\": "src/Domain/",
-            "Database\\Factories\\": "src/Domain/User/Factories/",
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },
@@ -63,6 +63,9 @@
         ],
         "post-create-project-cmd": [
             "make laravel-init"
+        ],
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ]
     },
     "extra": {

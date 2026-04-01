@@ -4,7 +4,6 @@ import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
 import { login } from '@/wayfinder/routes';
 import { email } from '@/wayfinder/routes/password';
 import { Form, Head } from '@inertiajs/react';
@@ -12,10 +11,7 @@ import { LoaderCircle } from 'lucide-react';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
-        <AuthLayout
-            title="Forgot password"
-            description="Enter your email to receive a password reset link"
-        >
+        <>
             <Head title="Forgot password" />
 
             {status && (
@@ -63,6 +59,11 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     <TextLink href={login()}>log in</TextLink>
                 </div>
             </div>
-        </AuthLayout>
+        </>
     );
 }
+
+ForgotPassword.layout = {
+    title: 'Forgot password',
+    description: 'Enter your email to receive a password reset link',
+};
