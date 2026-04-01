@@ -2,22 +2,25 @@
 
 declare(strict_types=1);
 
-use Database\Factories\UserFactory;
+use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
+use Laravel\Fortify\Features;
 
-uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
+beforeEach(function (): void {
+    $this->skipUnlessFortifyHas(Features::resetPasswords());
+});
 
 test('reset password link screen can be rendered', function (): void {
     $response = $this->get(route('password.request'));
 
-    $response->assertStatus(200);
+    $response->assertOk();
 });
 
 test('reset password link can be requested', function (): void {
     Notification::fake();
 
-    $user = UserFactory::new()->create();
+    $user = User::factory()->create();
 
     $this->post(route('password.email'), ['email' => $user->email]);
 
@@ -27,14 +30,14 @@ test('reset password link can be requested', function (): void {
 test('reset password screen can be rendered', function (): void {
     Notification::fake();
 
-    $user = UserFactory::new()->create();
+    $user = User::factory()->create();
 
     $this->post(route('password.email'), ['email' => $user->email]);
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification): true {
         $response = $this->get(route('password.reset', $notification->token));
 
-        $response->assertStatus(200);
+        $response->assertOk();
 
         return true;
     });
@@ -43,7 +46,7 @@ test('reset password screen can be rendered', function (): void {
 test('password can be reset with valid token', function (): void {
     Notification::fake();
 
-    $user = UserFactory::new()->create();
+    $user = User::factory()->create();
 
     $this->post(route('password.email'), ['email' => $user->email]);
 
@@ -51,8 +54,8 @@ test('password can be reset with valid token', function (): void {
         $response = $this->post(route('password.update'), [
             'token' => $notification->token,
             'email' => $user->email,
-            'password' => 'supersecret',
-            'password_confirmation' => 'supersecret',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ]);
 
         $response
@@ -64,7 +67,7 @@ test('password can be reset with valid token', function (): void {
 });
 
 test('password cannot be reset with invalid token', function (): void {
-    $user = UserFactory::new()->create();
+    $user = User::factory()->create();
 
     $response = $this->post(route('password.update'), [
         'token' => 'invalid-token',

@@ -6,6 +6,8 @@ declare module '@inertiajs/core' {
             auth: {
                 user: EloquentResource<User> | null;
             };
+            currentTeam: Team | null;
+            teams: Team[];
             sidebarOpen: boolean;
             [key: string]: unknown;
         };

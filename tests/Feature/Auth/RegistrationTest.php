@@ -2,22 +2,24 @@
 
 declare(strict_types=1);
 
-uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
+use App\Models\User;
 
 test('registration screen can be rendered', function (): void {
     $response = $this->get(route('register'));
 
-    $response->assertStatus(200);
+    $response->assertOk();
 });
 
 test('new users can register', function (): void {
     $response = $this->post(route('register.store'), [
         'name' => 'Test User',
         'email' => 'test@example.com',
-        'password' => 'supersecret',
-        'password_confirmation' => 'supersecret',
+        'password' => 'password',
+        'password_confirmation' => 'password',
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+
+    $user = User::where('email', 'test@example.com')->first();
+    $response->assertRedirect(route('dashboard'));
 });

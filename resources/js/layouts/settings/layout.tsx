@@ -9,6 +9,7 @@ import { edit } from '@/wayfinder/routes/profile';
 import { edit as editSecurity } from '@/wayfinder/routes/security';
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
+import { index as teams } from '@/wayfinder/routes/teams';
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -19,6 +20,11 @@ const sidebarNavItems: NavItem[] = [
     {
         title: 'Security',
         href: editSecurity(),
+        icon: null,
+    },
+    {
+        title: 'Teams',
+        href: teams(),
         icon: null,
     },
     {

@@ -2,33 +2,27 @@
 
 declare(strict_types=1);
 
-use Database\Factories\UserFactory;
+use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 use Laravel\Fortify\Features;
 
-uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
+beforeEach(function (): void {
+    $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());
+});
 
 test('two factor challenge redirects to login when not authenticated', function (): void {
-    if (! Features::canManageTwoFactorAuthentication()) {
-        $this->markTestSkipped('Two-factor authentication is not enabled.');
-    }
-
     $response = $this->get(route('two-factor.login'));
 
     $response->assertRedirect(route('login'));
 });
 
 test('two factor challenge can be rendered', function (): void {
-    if (! Features::canManageTwoFactorAuthentication()) {
-        $this->markTestSkipped('Two-factor authentication is not enabled.');
-    }
-
     Features::twoFactorAuthentication([
         'confirm' => true,
         'confirmPassword' => true,
     ]);
 
-    $user = UserFactory::new()->create();
+    $user = User::factory()->create();
 
     $user->forceFill([
         'two_factor_secret' => encrypt('test-secret'),
@@ -38,12 +32,12 @@ test('two factor challenge can be rendered', function (): void {
 
     $this->post(route('login'), [
         'email' => $user->email,
-        'password' => 'supersecret',
+        'password' => 'password',
     ]);
 
     $this->get(route('two-factor.login'))
         ->assertOk()
         ->assertInertia(fn (Assert $page): Assert => $page
-            ->component('auth/two-factor-challenge')
+            ->component('auth/two-factor-challenge'),
         );
 });

@@ -3,6 +3,8 @@ import type { LucideIcon } from 'lucide-react';
 
 export type AppVariant = 'header' | 'sidebar';
 
+export type TeamRole = 'owner' | 'admin' | 'member';
+
 interface BreadcrumbItem {
     title: string;
     href: NonNullable<InertiaLinkProps['href']>;
@@ -31,3 +33,4 @@ interface AuthLayoutProps {
     title?: string;
     description?: string;
 }
+
