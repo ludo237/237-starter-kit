@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { update } from '@/wayfinder/routes/password';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head } from '@inertiajs/react';
 
 type Props = {
@@ -19,10 +20,14 @@ export default function ResetPassword({ token, email }: Props) {
 
             <Form
                 {...update.form()}
-                transform={(data) => ({ ...data, token, email })}
+                transform={(data: Record<string, unknown>) => ({
+                    ...data,
+                    token,
+                    email,
+                })}
                 resetOnSuccess={['password', 'password_confirmation']}
             >
-                {({ processing, errors }) => (
+                {({ processing, errors }: FormComponentSlotProps) => (
                     <div className="grid gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>

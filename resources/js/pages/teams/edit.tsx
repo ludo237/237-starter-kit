@@ -1,7 +1,3 @@
-import { Transition } from '@headlessui/react';
-import { Form, Head, router } from '@inertiajs/react';
-import { ChevronDown, Mail, UserPlus, X } from 'lucide-react';
-import { useMemo, useState } from 'react';
 import CancelInvitationModal from '@/components/cancel-invitation-modal';
 import DeleteTeamModal from '@/components/delete-team-modal';
 import Heading from '@/components/heading';
@@ -28,6 +24,11 @@ import {
 import { useInitials } from '@/hooks/use-initials';
 import { edit, index, update } from '@/wayfinder/routes/teams';
 import { update as updateMember } from '@/wayfinder/routes/teams/members';
+import { Transition } from '@headlessui/react';
+import type { FormComponentSlotProps } from '@inertiajs/core';
+import { Form, Head, router } from '@inertiajs/react';
+import { ChevronDown, Mail, UserPlus, X } from 'lucide-react';
+import { useMemo, useState } from 'react';
 
 type Props = {
     team: Team;
@@ -106,7 +107,7 @@ export default function TeamEdit({
                                     errors,
                                     processing,
                                     recentlySuccessful,
-                                }) => (
+                                }: FormComponentSlotProps) => (
                                     <>
                                         <div className="grid gap-2">
                                             <Label htmlFor="name">

@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import ProfileController from '@/wayfinder/actions/App/Http/Controllers/Settings/ProfileController';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
 
@@ -63,7 +64,11 @@ export default function DeleteUser() {
                             resetOnSuccess
                             className="space-y-6"
                         >
-                            {({ resetAndClearErrors, processing, errors }) => (
+                            {({
+                                resetAndClearErrors,
+                                processing,
+                                errors,
+                            }: FormComponentSlotProps) => (
                                 <>
                                     <div className="grid gap-2">
                                         <Label

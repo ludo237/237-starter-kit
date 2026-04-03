@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { logout } from '@/wayfinder/routes';
 import { send } from '@/wayfinder/routes/verification';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head } from '@inertiajs/react';
 
 export default function VerifyEmail({ status }: { status?: string }) {
@@ -19,7 +20,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
             )}
 
             <Form {...send.form()} className="space-y-6 text-center">
-                {({ processing }) => (
+                {({ processing }: FormComponentSlotProps) => (
                     <>
                         <Button disabled={processing} variant="secondary">
                             {processing && <Spinner />}

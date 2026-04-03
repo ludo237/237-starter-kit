@@ -1,4 +1,4 @@
-import { SharedData } from '@/types';
+import type { SharedData } from '@/types';
 import { dashboard, login, register } from '@/wayfinder/routes';
 import { Head, Link, usePage } from '@inertiajs/react';
 

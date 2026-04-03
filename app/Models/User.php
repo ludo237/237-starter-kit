@@ -17,8 +17,15 @@ use Override;
 
 class User extends Authenticatable
 {
+    use HasApiTokens;
+
     /** @use HasFactory<UserFactory> */
-    use HasApiTokens,HasFactory, HasTeams, HasUlids, Notifiable, TwoFactorAuthenticatable;
+    use HasFactory;
+
+    use HasTeams;
+    use HasUlids;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are not mass assignable.

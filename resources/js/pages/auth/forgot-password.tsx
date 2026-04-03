@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { login } from '@/wayfinder/routes';
 import { email } from '@/wayfinder/routes/password';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -22,7 +23,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
             <div className="space-y-6">
                 <Form {...email.form()}>
-                    {({ processing, errors }) => (
+                    {({ processing, errors }: FormComponentSlotProps) => (
                         <>
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email address</Label>

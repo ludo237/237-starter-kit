@@ -8,31 +8,31 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { destroy as destroyInvitation } from '@/wayfinder/routes/teams/invitations';
+import { destroy as destroyMember } from '@/wayfinder/routes/teams/members';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
 type Props = {
     team: Team;
-    invitation: TeamInvitation | null;
+    member: TeamMember | null;
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };
 
-export default function CancelInvitationModal({
+export default function RemoveMemberModal({
     team,
-    invitation,
+    member,
     open,
     onOpenChange,
 }: Props) {
     const [processing, setProcessing] = useState(false);
 
-    const cancelInvitation = () => {
-        if (!invitation) {
+    const removeMember = () => {
+        if (!member) {
             return;
         }
 
-        router.visit(destroyInvitation([team.slug, invitation.code]), {
+        router.visit(destroyMember([team.slug, member.id]), {
             onStart: () => setProcessing(true),
             onFinish: () => setProcessing(false),
             onSuccess: () => onOpenChange(false),
@@ -43,25 +43,25 @@ export default function CancelInvitationModal({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Cancel invitation</DialogTitle>
+                    <DialogTitle>Remove team member</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to cancel the invitation for{' '}
-                        <strong>{invitation?.email}</strong>?
+                        Are you sure you want to remove{' '}
+                        <strong>{member?.name}</strong> from this team?
                     </DialogDescription>
                 </DialogHeader>
 
                 <DialogFooter className="gap-2">
                     <DialogClose asChild>
-                        <Button variant="secondary">Keep invitation</Button>
+                        <Button variant="secondary">Cancel</Button>
                     </DialogClose>
 
                     <Button
                         variant="destructive"
-                        data-test="cancel-invitation-confirm"
+                        data-test="remove-member-confirm"
                         disabled={processing}
-                        onClick={cancelInvitation}
+                        onClick={removeMember}
                     >
-                        Cancel invitation
+                        Remove member
                     </Button>
                 </DialogFooter>
             </DialogContent>

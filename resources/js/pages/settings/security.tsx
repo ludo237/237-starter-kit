@@ -10,6 +10,7 @@ import SecurityController from '@/wayfinder/actions/App/Http/Controllers/Setting
 import { edit } from '@/wayfinder/routes/security';
 import { disable, enable } from '@/wayfinder/routes/two-factor';
 import { Transition } from '@headlessui/react';
+import type { Errors, FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head } from '@inertiajs/react';
 import { ShieldCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
@@ -74,7 +75,7 @@ export default function Security({
                         'current_password',
                     ]}
                     resetOnSuccess
-                    onError={(errors) => {
+                    onError={(errors: Errors) => {
                         if (errors.password) {
                             passwordInput.current?.focus();
                         }
@@ -85,7 +86,11 @@ export default function Security({
                     }}
                     className="space-y-6"
                 >
-                    {({ errors, processing, recentlySuccessful }) => (
+                    {({
+                        errors,
+                        processing,
+                        recentlySuccessful,
+                    }: FormComponentSlotProps) => (
                         <>
                             <div className="grid gap-2">
                                 <Label htmlFor="current_password">
@@ -179,7 +184,9 @@ export default function Security({
 
                             <div className="relative inline">
                                 <Form {...disable.form()}>
-                                    {({ processing }) => (
+                                    {({
+                                        processing,
+                                    }: FormComponentSlotProps) => (
                                         <Button
                                             variant="destructive"
                                             type="submit"
@@ -221,7 +228,9 @@ export default function Security({
                                             setShowSetupModal(true)
                                         }
                                     >
-                                        {({ processing }) => (
+                                        {({
+                                            processing,
+                                        }: FormComponentSlotProps) => (
                                             <Button
                                                 type="submit"
                                                 disabled={processing}

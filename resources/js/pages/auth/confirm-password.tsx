@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/wayfinder/routes/password/confirm';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head } from '@inertiajs/react';
 
 export default function ConfirmPassword() {
@@ -12,7 +13,7 @@ export default function ConfirmPassword() {
             <Head title="Confirm password" />
 
             <Form {...store.form()} resetOnSuccess={['password']}>
-                {({ processing, errors }) => (
+                {({ processing, errors }: FormComponentSlotProps) => (
                     <div className="space-y-6">
                         <div className="grid gap-2">
                             <Label htmlFor="password">Password</Label>

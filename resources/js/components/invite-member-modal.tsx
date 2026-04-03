@@ -1,5 +1,3 @@
-import { Form } from '@inertiajs/react';
-import { useState } from 'react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,6 +19,9 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { store as storeInvitation } from '@/wayfinder/routes/teams/invitations';
+import type { FormComponentSlotProps } from '@inertiajs/core';
+import { Form } from '@inertiajs/react';
+import { useState } from 'react';
 
 type Props = {
     team: Team;
@@ -54,7 +55,7 @@ export default function InviteMemberModal({
                     className="space-y-6"
                     onSuccess={() => onOpenChange(false)}
                 >
-                    {({ errors, processing }) => (
+                    {({ errors, processing }: FormComponentSlotProps) => (
                         <>
                             <DialogHeader>
                                 <DialogTitle>Invite a team member</DialogTitle>

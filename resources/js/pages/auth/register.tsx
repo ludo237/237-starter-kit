@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/wayfinder/routes';
 import { store } from '@/wayfinder/routes/register';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head } from '@inertiajs/react';
 
 export default function Register() {
@@ -19,7 +20,7 @@ export default function Register() {
                 disableWhileProcessing
                 className="flex flex-col gap-6"
             >
-                {({ processing, errors }) => (
+                {({ processing, errors }: FormComponentSlotProps) => (
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">

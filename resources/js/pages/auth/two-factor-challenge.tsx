@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/input-otp';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
 import { store } from '@/wayfinder/routes/two-factor/login';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { useMemo, useState } from 'react';
@@ -60,7 +61,11 @@ export default function TwoFactorChallenge() {
                     resetOnError
                     resetOnSuccess={!showRecoveryInput}
                 >
-                    {({ errors, processing, clearErrors }) => (
+                    {({
+                        errors,
+                        processing,
+                        clearErrors,
+                    }: FormComponentSlotProps) => (
                         <>
                             {showRecoveryInput ? (
                                 <>

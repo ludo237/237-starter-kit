@@ -8,6 +8,7 @@ import ProfileController from '@/wayfinder/actions/App/Http/Controllers/Settings
 import { edit } from '@/wayfinder/routes/profile';
 import { send } from '@/wayfinder/routes/verification';
 import { Transition } from '@headlessui/react';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
 
 export default function Profile({
@@ -18,6 +19,12 @@ export default function Profile({
     status?: string;
 }) {
     const { auth } = usePage().props;
+
+    if (!auth.user) {
+        return null;
+    }
+
+    const user = auth.user;
 
     return (
         <>
@@ -39,7 +46,11 @@ export default function Profile({
                     }}
                     className="space-y-6"
                 >
-                    {({ processing, recentlySuccessful, errors }) => (
+                    {({
+                        processing,
+                        recentlySuccessful,
+                        errors,
+                    }: FormComponentSlotProps) => (
                         <>
                             <div className="grid gap-2">
                                 <Label htmlFor="name">Name</Label>
@@ -47,7 +58,7 @@ export default function Profile({
                                 <Input
                                     id="name"
                                     className="mt-1 block w-full"
-                                    defaultValue={auth.user.name}
+                                    defaultValue={user.data.name}
                                     name="name"
                                     required
                                     autoComplete="name"
@@ -67,7 +78,7 @@ export default function Profile({
                                     id="email"
                                     type="email"
                                     className="mt-1 block w-full"
-                                    defaultValue={auth.user.email}
+                                    defaultValue={user.data.email}
                                     name="email"
                                     required
                                     autoComplete="username"
@@ -81,7 +92,7 @@ export default function Profile({
                             </div>
 
                             {mustVerifyEmail &&
-                                auth.user.email_verified_at === null && (
+                                user.data.emailVerifiedAt === null && (
                                     <div>
                                         <p className="-mt-4 text-sm text-muted-foreground">
                                             Your email address is unverified.{' '}

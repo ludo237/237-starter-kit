@@ -83,6 +83,7 @@ laravel-init: directories sqlite-init ## Initialize Laravel application
 	@cd $(ROOT_DIR); set -e
 	@cp $(ROOT_DIR)envs/.env.dev .env
 	@php artisan key:generate
+	@php artisan boost:install
 	@php artisan migrate:fresh --seed
 	@php artisan optimize:clear
 

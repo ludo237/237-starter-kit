@@ -16,8 +16,12 @@ use Override;
 
 class Team extends Model
 {
+    use GeneratesUniqueTeamSlugs;
+
     /** @use HasFactory<TeamFactory> */
-    use GeneratesUniqueTeamSlugs, HasFactory, SoftDeletes;
+    use HasFactory;
+
+    use SoftDeletes;
 
     protected $guarded = ['id'];
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Concerns;
 
-use App\Models\Team;
 use Illuminate\Support\Str;
 
 trait GeneratesUniqueTeamSlugs
@@ -33,6 +32,7 @@ trait GeneratesUniqueTeamSlugs
                 if ($slug === $defaultSlug) {
                     return 0;
                 }
+
                 if (preg_match('/^'.preg_quote($defaultSlug, '/').'-(\d+)$/', $slug, $matches)) {
                     return (int) $matches[1];
                 }

@@ -1,5 +1,3 @@
-import { router, usePage } from '@inertiajs/react';
-import { Check, ChevronsUpDown, Plus, Users } from 'lucide-react';
 import CreateTeamModal from '@/components/create-team-modal';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,6 +10,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { switchMethod } from '@/wayfinder/routes/teams';
+import { router, usePage } from '@inertiajs/react';
+import { Check, ChevronsUpDown, Plus, Users } from 'lucide-react';
 
 type TeamSwitcherProps = {
     inHeader?: boolean;

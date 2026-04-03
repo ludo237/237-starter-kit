@@ -36,7 +36,7 @@ class UniqueTeamInvitation implements ValidationRule
             return;
         }
 
-        $hasPendingInvitation = TeamInvitation::where('team_id', $this->team->id)
+        $hasPendingInvitation = TeamInvitation::query()->where('team_id', $this->team->id)
             ->whereRaw('LOWER(email) = ?', [$email])
             ->whereNull('accepted_at')
             ->where(function ($query): void {

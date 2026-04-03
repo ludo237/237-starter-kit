@@ -7,9 +7,9 @@ import type { NavItem } from '@/types';
 import { edit as editAppearance } from '@/wayfinder/routes/appearance';
 import { edit } from '@/wayfinder/routes/profile';
 import { edit as editSecurity } from '@/wayfinder/routes/security';
+import { index as teams } from '@/wayfinder/routes/teams';
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
-import { index as teams } from '@/wayfinder/routes/teams';
 
 const sidebarNavItems: NavItem[] = [
     {

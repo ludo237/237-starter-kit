@@ -9,6 +9,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { register } from '@/wayfinder/routes';
 import { store } from '@/wayfinder/routes/login';
 import { request } from '@/wayfinder/routes/password';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form, Head } from '@inertiajs/react';
 
 type Props = {
@@ -31,7 +32,7 @@ export default function Login({
                 resetOnSuccess={['password']}
                 className="flex flex-col gap-6"
             >
-                {({ processing, errors }) => (
+                {({ processing, errors }: FormComponentSlotProps) => (
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">

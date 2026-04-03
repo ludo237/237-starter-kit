@@ -8,6 +8,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { regenerateRecoveryCodes } from '@/wayfinder/routes/two-factor';
+import type { FormComponentSlotProps } from '@inertiajs/core';
 import { Form } from '@inertiajs/react';
 import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -85,7 +86,7 @@ export default function TwoFactorRecoveryCodes({
                             options={{ preserveScroll: true }}
                             onSuccess={fetchRecoveryCodes}
                         >
-                            {({ processing }) => (
+                            {({ processing }: FormComponentSlotProps) => (
                                 <Button
                                     variant="secondary"
                                     type="submit"

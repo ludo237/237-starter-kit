@@ -1,15 +1,17 @@
 includes:
-    - ./vendor/larastan/larastan/extension.neon
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon
 
 parameters:
     paths:
-      - app
+        - app
+        - bootstrap/app.php
+        - config
+        - database
+        - public
+        - routes
 
-    excludePaths:
-      - tests
-
-    # The level 9 is the highest level
     level: 7
 
-    checkUninitializedProperties: true
-    reportUnmatchedIgnoredErrors: false
+    tmpDir: /tmp/phpstan

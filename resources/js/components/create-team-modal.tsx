@@ -1,6 +1,3 @@
-import { Form } from '@inertiajs/react';
-import type { PropsWithChildren } from 'react';
-import { useState } from 'react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +13,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { store } from '@/wayfinder/routes/teams';
+import type { FormComponentSlotProps } from '@inertiajs/core';
+import { Form } from '@inertiajs/react';
+import type { PropsWithChildren } from 'react';
+import { useState } from 'react';
 
 export default function CreateTeamModal({ children }: PropsWithChildren) {
     const [open, setOpen] = useState(false);
@@ -30,7 +31,7 @@ export default function CreateTeamModal({ children }: PropsWithChildren) {
                     className="space-y-6"
                     onSuccess={() => setOpen(false)}
                 >
-                    {({ errors, processing }) => (
+                    {({ errors, processing }: FormComponentSlotProps) => (
                         <>
                             <DialogHeader>
                                 <DialogTitle>Create a new team</DialogTitle>

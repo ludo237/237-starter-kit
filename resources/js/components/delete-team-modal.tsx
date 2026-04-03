@@ -1,5 +1,3 @@
-import { Form } from '@inertiajs/react';
-import { useState } from 'react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,6 +12,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { destroy } from '@/wayfinder/routes/teams';
+import type { FormComponentSlotProps } from '@inertiajs/core';
+import { Form } from '@inertiajs/react';
+import { useState } from 'react';
 
 type Props = {
     team: Team;
@@ -43,7 +44,7 @@ export default function DeleteTeamModal({ team, open, onOpenChange }: Props) {
                     className="space-y-6"
                     onSuccess={() => handleOpenChange(false)}
                 >
-                    {({ errors, processing }) => (
+                    {({ errors, processing }: FormComponentSlotProps) => (
                         <>
                             <DialogHeader>
                                 <DialogTitle>Are you sure?</DialogTitle>
